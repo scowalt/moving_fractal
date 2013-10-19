@@ -1,0 +1,18 @@
+#N canvas 1060 360 507 415 10;
+#X declare -lib mrpeach;
+#X obj -57 13 import mrpeach;
+#X obj 92 211 packOSC;
+#X obj 105 326 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X msg -116 233 connect localhost 9003;
+#X obj 93 265 udpsend;
+#X msg -105 264 disconnect;
+#X msg 82 146 /green 123;
+#X obj 27 93 pack;
+#X obj 193 201 print;
+#X connect 1 0 4 0;
+#X connect 3 0 4 0;
+#X connect 4 0 2 0;
+#X connect 5 0 4 0;
+#X connect 6 0 1 0;
+#X connect 6 0 8 0;

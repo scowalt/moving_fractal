@@ -13,7 +13,9 @@ import netP5.*;
 
 /** Variables **/
 OscP5 oscP5;
-int green = 0;
+float red = 0.00;
+float green = 0.00;
+float blue = 0.00;
 
 void setup() {
   size(640, 360);
@@ -26,7 +28,11 @@ void setup() {
 void oscEvent(OscMessage msg) {
   msg.print();
   if (msg.addrPattern().equals("/green")) {
-    green = msg.get(0).intValue();
+    green = msg.get(0).floatValue() / 128;
+  } else if (msg.addrPattern().equals("/red")) {
+    red = msg.get(0).floatValue() / 128;
+  } else if (msg.addrPattern().equals("/blue")) {
+    blue = msg.get(0).floatValue() / 128;
   }
 }
 
@@ -86,7 +92,7 @@ void draw() {
       }
       else {
         // Gosh, we could make fancy colors here if we wanted
-        pixels[i+j*width] = color(n*16 % 255, green, 0);
+        pixels[i+j*width] = color(16 * n * red % 255, 16 * n * green % 255, 16 * n * blue % 255);
       }
       x += dx;
     }

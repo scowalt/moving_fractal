@@ -1,18 +1,62 @@
-#N canvas 1060 360 507 415 10;
+#N canvas 522 201 199 396 10;
 #X declare -lib mrpeach;
-#X obj -57 13 import mrpeach;
-#X obj 92 211 packOSC;
-#X obj 105 326 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
-1;
-#X msg -116 233 connect localhost 9003;
-#X obj 93 265 udpsend;
-#X msg -105 264 disconnect;
-#X msg 82 146 /green 123;
-#X obj 27 93 pack;
-#X obj 193 201 print;
+#N canvas 1061 261 642 320 osc 0;
+#X obj -234 110 receive connect;
+#X msg -230 134 connect localhost 9003;
+#X obj -227 -34 import mrpeach;
+#X obj -65 97 packOSC;
+#X obj -64 151 udpsend;
+#X msg -184 193 disconnect;
+#X obj -213 168 receive disconnect;
+#X obj -69 204 send connected;
+#X obj -128 15 receive green;
+#X obj 7 154 print sending;
+#X msg -129 43 send /green \$1;
+#X obj -230 10 receive red;
+#X msg -228 44 send /red \$1;
+#X obj -24 14 receive blue;
+#X msg -25 44 send /blue \$1;
+#X connect 0 0 1 0;
 #X connect 1 0 4 0;
 #X connect 3 0 4 0;
-#X connect 4 0 2 0;
+#X connect 3 0 9 0;
+#X connect 4 0 7 0;
 #X connect 5 0 4 0;
-#X connect 6 0 1 0;
-#X connect 6 0 8 0;
+#X connect 6 0 5 0;
+#X connect 8 0 10 0;
+#X connect 10 0 3 0;
+#X connect 11 0 12 0;
+#X connect 12 0 3 0;
+#X connect 13 0 14 0;
+#X connect 14 0 3 0;
+#X restore -54 2 pd osc;
+#X obj -154 83 send connect;
+#X obj -166 61 bng 15 250 50 0 empty empty Click_here_to_connect! 17
+7 0 10 -262144 -1 -1;
+#X obj -168 113 bng 15 250 50 0 empty empty Click_here_to_disconnect
+17 7 0 10 -262144 -1 -1;
+#X obj -153 133 send disconnect;
+#X obj -170 -4 receive connected;
+#X obj -170 18 tgl 30 0 empty empty Connected 35 7 0 10 -262144 -1
+-1 1 1;
+#X obj -126 194 send green;
+#X obj -165 173 hsl 128 15 0 255 0 0 empty empty Green_value -2 -8
+0 10 -4034 -1 -1 2500 1;
+#X floatatom -168 194 5 0 0 0 - - -;
+#X obj -165 233 hsl 128 15 0 255 0 0 empty empty Red_value -2 -8 0
+10 -258113 -1 -1 4000 1;
+#X floatatom -168 254 5 0 0 0 - - -;
+#X obj -167 290 hsl 128 15 0 255 0 0 empty empty Blue_value -2 -8 0
+10 -4160 -1 -1 0 1;
+#X floatatom -170 311 5 0 0 0 - - -;
+#X obj -126 254 send red;
+#X obj -128 311 send blue;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
+#X connect 5 0 6 0;
+#X connect 8 0 7 0;
+#X connect 8 0 9 0;
+#X connect 10 0 11 0;
+#X connect 10 0 14 0;
+#X connect 12 0 13 0;
+#X connect 12 0 15 0;

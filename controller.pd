@@ -1,6 +1,6 @@
-#N canvas 522 201 199 396 10;
+#N canvas 1110 168 487 449 10;
 #X declare -lib mrpeach;
-#N canvas 1061 261 642 320 osc 0;
+#N canvas 891 548 642 320 osc 1;
 #X obj -234 110 receive connect;
 #X msg -230 134 connect localhost 9003;
 #X obj -227 -34 import mrpeach;
@@ -9,13 +9,21 @@
 #X msg -184 193 disconnect;
 #X obj -213 168 receive disconnect;
 #X obj -69 204 send connected;
-#X obj -128 15 receive green;
+#X obj -130 20 receive green;
 #X obj 7 154 print sending;
 #X msg -129 43 send /green \$1;
-#X obj -230 10 receive red;
-#X msg -228 44 send /red \$1;
+#X obj -230 43 receive red;
+#X msg -230 67 send /red \$1;
 #X obj -24 14 receive blue;
 #X msg -25 44 send /blue \$1;
+#X obj 94 14 receive xmin;
+#X msg 92 44 send /xmin \$1;
+#X obj 200 17 receive ymin;
+#X msg 200 47 send /ymin \$1;
+#X obj 167 84 receive width;
+#X msg 167 106 send /width \$1;
+#X msg 141 167 send /height \$1;
+#X obj 142 139 receive height;
 #X connect 0 0 1 0;
 #X connect 1 0 4 0;
 #X connect 3 0 4 0;
@@ -29,28 +37,52 @@
 #X connect 12 0 3 0;
 #X connect 13 0 14 0;
 #X connect 14 0 3 0;
-#X restore -54 2 pd osc;
-#X obj -154 83 send connect;
-#X obj -166 61 bng 15 250 50 0 empty empty Click_here_to_connect! 17
+#X connect 15 0 16 0;
+#X connect 16 0 3 0;
+#X connect 17 0 18 0;
+#X connect 18 0 3 0;
+#X connect 19 0 20 0;
+#X connect 20 0 3 0;
+#X connect 21 0 3 0;
+#X connect 22 0 21 0;
+#X restore -41 -4 pd osc;
+#X obj -182 78 send connect;
+#X obj -181 58 bng 15 250 50 0 empty empty Click_here_to_connect! 17
 7 0 10 -262144 -1 -1;
-#X obj -168 113 bng 15 250 50 0 empty empty Click_here_to_disconnect
+#X obj -182 100 bng 15 250 50 0 empty empty Click_here_to_disconnect
 17 7 0 10 -262144 -1 -1;
-#X obj -153 133 send disconnect;
+#X obj -182 119 send disconnect;
 #X obj -170 -4 receive connected;
-#X obj -170 18 tgl 30 0 empty empty Connected 35 7 0 10 -262144 -1
+#X obj -170 19 tgl 30 0 empty empty Connected 35 7 0 10 -262144 -1
 -1 1 1;
-#X obj -126 194 send green;
-#X obj -165 173 hsl 128 15 0 255 0 0 empty empty Green_value -2 -8
-0 10 -4034 -1 -1 2500 1;
-#X floatatom -168 194 5 0 0 0 - - -;
-#X obj -165 233 hsl 128 15 0 255 0 0 empty empty Red_value -2 -8 0
-10 -258113 -1 -1 4000 1;
-#X floatatom -168 254 5 0 0 0 - - -;
-#X obj -167 290 hsl 128 15 0 255 0 0 empty empty Blue_value -2 -8 0
-10 -4160 -1 -1 0 1;
-#X floatatom -170 311 5 0 0 0 - - -;
-#X obj -126 254 send red;
-#X obj -128 311 send blue;
+#X obj -144 175 send green;
+#X obj -183 154 hsl 128 15 0.0001 10 0 0 empty empty Green_value -2
+-8 0 10 -4034 -1 -1 2400 1;
+#X floatatom -186 175 5 0 0 0 - - -;
+#X obj -183 209 hsl 128 15 0.001 10 0 0 empty empty Red_value -2 -8
+0 10 -258113 -1 -1 0 1;
+#X floatatom -186 230 5 0 0 0 - - -;
+#X obj -184 269 hsl 128 15 1e-006 10 0 0 empty empty Blue_value -2
+-8 0 10 -4160 -1 -1 0 1;
+#X floatatom -187 290 5 0 0 0 - - -;
+#X obj -146 230 send red;
+#X obj -145 290 send blue;
+#X obj -6 144 hsl 256 15 1 -7 0 0 empty empty xmin -2 -8 0 10 -262144
+-1 -1 9900 1;
+#X floatatom -1 197 5 0 0 0 - - -;
+#X obj 42 195 send xmin;
+#X obj 116 21 vsl 15 256 -3.5 1 0 0 empty empty ymin 0 -9 0 10 -262144
+-1 -1 13100 1;
+#X floatatom -1 221 5 0 0 0 - - -;
+#X obj 42 221 send ymin;
+#X obj -16 310 hsl 128 15 5 0 0 0 empty empty xzoom -2 -8 0 10 -262144
+-1 -1 0 1;
+#X floatatom -19 335 5 0 0 0 - - -;
+#X obj 29 335 send width;
+#X obj 138 309 hsl 128 15 2.5 0 0 0 empty empty yzoom -2 -8 0 10 -262144
+-1 -1 0 1;
+#X floatatom 135 336 5 0 0 0 - - -;
+#X obj 182 337 send height;
 #X connect 2 0 1 0;
 #X connect 3 0 4 0;
 #X connect 5 0 6 0;
@@ -60,3 +92,11 @@
 #X connect 10 0 14 0;
 #X connect 12 0 13 0;
 #X connect 12 0 15 0;
+#X connect 16 0 17 0;
+#X connect 16 0 18 0;
+#X connect 19 0 20 0;
+#X connect 19 0 21 0;
+#X connect 22 0 23 0;
+#X connect 22 0 24 0;
+#X connect 25 0 26 0;
+#X connect 25 0 27 0;

@@ -16,6 +16,13 @@ OscP5 oscP5;
 float red = 0.00;
 float green = 0.00;
 float blue = 0.00;
+// Establish a range of values on the complex plane
+// A different range will allow us to "zoom" in or out on the fractal
+// float xmin = -1.5; float ymin = -.1; float wh = 0.15;
+float w = 5;
+float h = 2.5;
+float xmin = -3;
+float ymin = -1.25;
 
 void setup() {
   size(640, 360);
@@ -28,23 +35,27 @@ void setup() {
 void oscEvent(OscMessage msg) {
   msg.print();
   if (msg.addrPattern().equals("/green")) {
-    green = msg.get(0).floatValue() / 128;
-  } else if (msg.addrPattern().equals("/red")) {
-    red = msg.get(0).floatValue() / 128;
-  } else if (msg.addrPattern().equals("/blue")) {
-    blue = msg.get(0).floatValue() / 128;
+    green = msg.get(0).floatValue();
+  } 
+  else if (msg.addrPattern().equals("/red")) {
+    red = msg.get(0).floatValue();
+  } 
+  else if (msg.addrPattern().equals("/blue")) {
+    blue = msg.get(0).floatValue();
+  } 
+  else if (msg.addrPattern().equals("/xmin")) {
+    xmin = msg.get(0).floatValue();
+  } 
+  else if (msg.addrPattern().equals("/ymin")) {
+    ymin = msg.get(0).floatValue();
+  }else if (msg.addrPattern().equals("/width")) {
+    w = msg.get(0).floatValue();
+  }else if (msg.addrPattern().equals("/height")) {
+    h = msg.get(0).floatValue();
   }
 }
 
 void draw() {
-  // Establish a range of values on the complex plane
-  // A different range will allow us to "zoom" in or out on the fractal
-  // float xmin = -1.5; float ymin = -.1; float wh = 0.15;
-  float xmin = -3;
-  float ymin = -1.25;
-  float w = 5;
-  float h = 2.5;
-
   // Make sure we can write to the pixels[] array.
   // Only need to do this once since we don't do any other drawing.
   loadPixels();
@@ -92,7 +103,7 @@ void draw() {
       }
       else {
         // Gosh, we could make fancy colors here if we wanted
-        pixels[i+j*width] = color(16 * n * red % 255, 16 * n * green % 255, 16 * n * blue % 255);
+        pixels[i+j*width] = color(n * red % 255, n * green % 255, n * blue % 255);
       }
       x += dx;
     }
